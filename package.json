@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "prepare": "husky"
   },
   "dependencies": {
     "expo": "~52.0.43",
@@ -16,8 +17,17 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
     "@types/react": "~18.3.12",
+    "cz-ptbr-changelog": "^1.0.1",
+    "husky": "^9.1.7",
     "typescript": "^5.3.3"
   },
-  "private": true
+  "private": true,
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-ptbr-changelog"
+    }
+  }
 }

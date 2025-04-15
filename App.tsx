@@ -3,8 +3,7 @@ import {
   Roboto_700Bold,
   useFonts,
 } from '@expo-google-fonts/roboto'
-import { StatusBar } from 'expo-status-bar'
-import { Text, View } from 'react-native'
+import { StatusBar, Text, View } from 'react-native'
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_700Bold, Roboto_400Regular })
@@ -15,14 +14,15 @@ export default function App() {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#202024',
       }}
     >
-      {fontsLoaded ? (
-        <Text>Open up App.tsx to start working on your app!</Text>
-      ) : (
-        <></>
-      )}
-      <StatusBar style="auto" />
+      <StatusBar
+        barStyle="light-content"
+        translucent
+        backgroundColor="transparent"
+      />
+      {fontsLoaded ? <Text>Home</Text> : <></>}
     </View>
   )
 }

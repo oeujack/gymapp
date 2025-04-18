@@ -3,11 +3,11 @@ import {
   Roboto_700Bold,
   useFonts,
 } from '@expo-google-fonts/roboto'
-import { Center, GluestackUIProvider, Text } from '@gluestack-ui/themed'
+import { GluestackUIProvider } from '@gluestack-ui/themed'
 import { StatusBar } from 'react-native'
 import { config } from './config/gluestack-ui.config'
 import { Loading } from '@components/Loading'
-import { SignUp } from '@screens/SignUp'
+import { Routes } from '@routes/index'
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_700Bold, Roboto_400Regular })
@@ -19,7 +19,7 @@ export default function App() {
         translucent
         backgroundColor="transparent"
       />
-      {fontsLoaded ? <SignUp /> : <Loading />}
+      {fontsLoaded ? <Routes /> : <Loading />}
     </GluestackUIProvider>
   )
 }

@@ -2,13 +2,11 @@
   "name": "gymapp",
   "version": "1.0.0",
   "main": "index.ts",
-  "type": "module",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
-    "prepare": "husky"
+    "web": "expo start --web"
   },
   "dependencies": {
     "@expo-google-fonts/roboto": "^0.3.0",
@@ -27,15 +25,8 @@
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
     "@types/react": "~18.3.12",
-    "cz-ptbr-changelog": "^1.0.1",
-    "husky": "^9.1.7",
     "react-native-svg-transformer": "^1.5.0",
     "typescript": "^5.3.3"
   },
-  "private": true,
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-ptbr-changelog"
-    }
-  }
+  "private": true
 }

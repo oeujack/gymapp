@@ -56,13 +56,27 @@ export function SignUp() {
     navigation.goBack()
   }
 
-  function handleSignUp({
-    name,
-    email,
-    password,
-    password_confirm,
-  }: FormDataProps) {
-    console.log({ name, email, password, password_confirm })
+  async function handleSignUp({ name, email, password }: FormDataProps) {
+    try {
+      const response = await fetch('http://192.168.15.3:3333/users', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, password })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Usuário cadastrado:', data);  
+      } else {
+        const errorData = await response.json();
+        console.log('Erro ao cadastrar usuário:', errorData);  
+      }
+    } catch (error) {
+      console.log('Erro na requisição:', error);
+    }
   }
 
   return (

@@ -18,6 +18,9 @@ import { Controller, useForm } from 'react-hook-form'
 
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { api } from '@services/api'
+import axios from 'axios'
+import { Alert } from 'react-native'
 
 type FormDataProps = {
   name: string
@@ -58,24 +61,12 @@ export function SignUp() {
 
   async function handleSignUp({ name, email, password }: FormDataProps) {
     try {
-      const response = await fetch('http://192.168.15.3:3333/users', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name, email, password })
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Usuário cadastrado:', data);  
-      } else {
-        const errorData = await response.json();
-        console.log('Erro ao cadastrar usuário:', errorData);  
-      }
+      const response = await api.post('/users', { name, email, password })
+      console.log(response.data)
     } catch (error) {
-      console.log('Erro na requisição:', error);
+      if (axios.isAxiosError(error)) {
+        Alert.alert('', error.response?.data.message)
+      }
     }
   }
 

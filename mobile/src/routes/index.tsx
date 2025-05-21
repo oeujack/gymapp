@@ -12,7 +12,7 @@ export function Routes() {
 
   const contextData = useContext(AuthContext)
 
-  console.log("USUÁRIO LOGADO =>", contextData)
+  console.log("USUÁRIO LOGADO =>", contextData.user.name)
 
   return (
     <Box flex={1} bg="$gray700">

@@ -9,7 +9,7 @@ import { config } from "./config/gluestack-ui.config"
 import { Loading } from "@components/Loading"
 import { Routes } from "@routes/index"
 
-import { AuthContext } from "@contexts/AuthContext"
+import { AuthContext, AuthContextProvider } from "@contexts/AuthContext"
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_700Bold, Roboto_400Regular })
@@ -21,16 +21,9 @@ export default function App() {
         translucent
         backgroundColor="transparent"
       />
-      <AuthContext.Provider
-        value={{
-          id: "1",
-          name: "Jackson dos Santos",
-          email: "teste@email.com",
-          avatar: "image.png",
-        }}
-      >
+      <AuthContextProvider>
         {fontsLoaded ? <Routes /> : <Loading />}
-      </AuthContext.Provider>
+      </AuthContextProvider>
     </GluestackUIProvider>
   )
 }

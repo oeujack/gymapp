@@ -6,14 +6,16 @@ import { useAuth } from "@hooks/useAuth"
 import { AuthRoutes } from "./auth.routes"
 import { AuthContext } from "@contexts/AuthContext"
 import { AppRoutes } from "./app.routes"
+import { Loading } from "@components/Loading"
 
 export function Routes() {
   const theme = DefaultTheme
   theme.colors.background = gluestackUIConfig.tokens.colors.gray700
+  const { user, isLoadingUserStorageData } = useAuth();
 
-  const { user } = useAuth()
-
-  console.log("USUÁRIO LOGADO =>", user)
+  if (isLoadingUserStorageData) {
+    return <Loading />
+  }
 
   return (
     <Box flex={1} bg="$gray700">

@@ -1,8 +1,10 @@
 import { createContext, useState, type ReactNode } from "react"
-import type { User } from "../types/User"
+import type { User } from "@dtos/User"
+import { api } from "@services/api"
 
 export type AuthContextDataProps = {
   user: User
+  singIn: (email: string, password: string) => Promise<void>
 }
 
 type AuthContextProviderProps = {
@@ -14,17 +16,25 @@ export const AuthContext = createContext<AuthContextDataProps>(
 )
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
-  const [user, setUser] = useState({
-    id: "1",
-    name: "Jackson",
-    email: "jackson@email.com",
-    avatar: "jackson.png",
-  })
+  const [user, setUser] = useState<User>({} as User)
+
+  async function singIn(email: string, password: string) {
+    try {
+      const { data } = await api.post("/sessions", { email, password })
+
+      if (data.user) {
+        setUser(data.user)
+      }
+    } catch (error) {
+      throw error
+    }
+  }
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        singIn,
       }}
     >
       {children}

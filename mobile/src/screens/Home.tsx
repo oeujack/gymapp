@@ -1,14 +1,16 @@
 import { ExerciseCard } from '@components/ExerciseCard'
 import { Group } from '@components/Group'
 import { HomeHeader } from '@components/HomeHeader'
-import { Heading, HStack, VStack, Text } from '@gluestack-ui/themed'
+import { Heading, HStack, VStack, Text, useToast, Toast, ToastTitle } from '@gluestack-ui/themed'
 import { useNavigation } from '@react-navigation/native'
 import type { AppNavigatorRouterProps } from '@routes/app.routes'
-import { useState } from 'react'
+import { api } from '@services/api'
+import { AppError } from '@utils/AppError'
+import { useEffect, useState } from 'react'
 import { FlatList } from 'react-native'
 
 export function Home() {
-  const [groups, setGroups] = useState(['Costas', 'Bíceps', 'Tríceps', 'Ombro'])
+  const [groups, setGroups] = useState<string[]>([]);
   const [exercises, setExercises] = useState([
     'Puxada frontal',
     'Remada curvada',
@@ -17,11 +19,39 @@ export function Home() {
   ])
   const [groupSelected, setGroupSelected] = useState('costas')
 
+  const toast = useToast();
+
   const navigation = useNavigation<AppNavigatorRouterProps>()
 
   function handleOpenExerciseDetails() {
     navigation.navigate('exercise')
   }
+
+  async function fetchGroups() {
+    try {
+      const response = await api.get('/groups');
+      setGroups(response.data);
+
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError ? error.message : 'Não foi possível carregar os grupos musculares';
+
+      toast.show({
+        placement: "top",
+        render: () => (
+          <Toast backgroundColor='$red500' action="error" variant="outline">
+            <ToastTitle color="$white">{title}</ToastTitle>
+          </Toast>
+        ),
+      });
+
+
+    }
+  }
+
+  useEffect(() => {
+    fetchGroups();
+  }, [])
 
   return (
     <VStack flex={1}>

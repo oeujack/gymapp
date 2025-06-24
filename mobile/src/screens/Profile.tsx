@@ -82,7 +82,7 @@ export function Profile() {
 
           <Center w="$full" gap="$4">
             <Input placeholder="Nome" bg="$gray600" />
-            <Input value="arthur@email.com" bg="$gray600" isReadOnly />
+            <Input value="seuemail@email.com" bg="$gray600" isReadOnly />
           </Center>
           <Heading
             alignSelf="flex-start"

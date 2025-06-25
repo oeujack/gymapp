@@ -2,7 +2,7 @@ import { ExerciseCard } from '@components/ExerciseCard'
 import { Group } from '@components/Group'
 import { HomeHeader } from '@components/HomeHeader'
 import { Loading } from '@components/Loading'
-import type { Exercise } from '@dtos/Exercise'
+import type { ExerciseDTO } from '@dtos/ExerciseDTO'
 import { Heading, HStack, VStack, Text, useToast, Toast, ToastTitle } from '@gluestack-ui/themed'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import type { AppNavigatorRouterProps } from '@routes/app.routes'
@@ -14,15 +14,15 @@ import { FlatList } from 'react-native'
 export function Home() {
   const [isLoading, setIsLoading] = useState(true)
   const [groups, setGroups] = useState<string[]>([]);
-  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
   const [groupSelected, setGroupSelected] = useState('antebraço');
 
   const toast = useToast();
 
   const navigation = useNavigation<AppNavigatorRouterProps>()
 
-  function handleOpenExerciseDetails() {
-    navigation.navigate('exercise')
+  function handleOpenExerciseDetails(exerciseId: string) {
+    navigation.navigate('exercise', { exerciseId })
   }
 
   async function fecthExercisesByGroup() {
@@ -70,8 +70,6 @@ export function Home() {
     }
   }
 
-
-
   useEffect(() => {
     fetchGroups();
   }, [])
@@ -115,7 +113,7 @@ export function Home() {
           data={exercises}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <ExerciseCard onPress={handleOpenExerciseDetails} data={item} />
+            <ExerciseCard onPress={() => handleOpenExerciseDetails(item.id)} data={item} />
           )}
           showsVerticalScrollIndicator={true}
           contentContainerStyle={{ paddingBottom: 20 }}

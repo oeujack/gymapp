@@ -1,4 +1,4 @@
-import type { Exercise } from '@dtos/Exercise'
+import type { ExerciseDTO } from '@dtos/ExerciseDTO'
 import {
   Text,
   Heading,
@@ -12,7 +12,7 @@ import { ChevronRight } from 'lucide-react-native'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 
 type Props = TouchableOpacityProps & {
-  data: Exercise
+  data: ExerciseDTO
 
 }
 

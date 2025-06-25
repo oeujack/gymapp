@@ -1,3 +1,4 @@
+import type { Exercise } from '@dtos/Exercise'
 import {
   Text,
   Heading,
@@ -9,9 +10,12 @@ import {
 import { ChevronRight } from 'lucide-react-native'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 
-type Props = TouchableOpacityProps & {}
+type Props = TouchableOpacityProps & {
+  data: Exercise
 
-export function ExerciseCard({ ...props }: Props) {
+}
+
+export function ExerciseCard({ data, ...props }: Props) {
   return (
     <TouchableOpacity {...props}>
       <HStack
@@ -36,10 +40,10 @@ export function ExerciseCard({ ...props }: Props) {
 
         <VStack flex={1}>
           <Heading fontSize="$lg" color="$white" fontFamily="$heading">
-            Puxada frontal
+            {data.name}
           </Heading>
           <Text fontSize="$sm" color="$gray200" mt="$1" numberOfLines={2}>
-            3 séries x 12 repetições
+            {data.series} séries x {data.repetitions} repetições
           </Text>
         </VStack>
 

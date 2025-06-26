@@ -22,6 +22,7 @@ import { useEffect, useState } from 'react'
 import type { ExerciseDTO } from '@dtos/ExerciseDTO'
 import { AppError } from '@utils/AppError'
 import { api } from '@services/api'
+import { Loading } from '@components/Loading'
 
 type RouteParamsProps = {
   exerciseId: string;
@@ -30,6 +31,7 @@ type RouteParamsProps = {
 export function Exercise() {
   const navigation = useNavigation<AppNavigatorRouterProps>()
   const [exercise, setExercise] = useState<ExerciseDTO>({} as ExerciseDTO);
+  const [isLoading, setIsLoading] = useState(true);
   const route = useRoute()
   const toast = useToast();
 
@@ -42,6 +44,7 @@ export function Exercise() {
 
   async function fetchExerciseDetails() {
     try {
+      setIsLoading(true);
       const response = await api.get(`/exercises/${exerciseId}`);
 
       setExercise(response.data);
@@ -59,6 +62,8 @@ export function Exercise() {
           </Toast>
         ),
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -99,7 +104,7 @@ export function Exercise() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 32 }}
       >
-        <VStack p="$8">
+        {isLoading ? <Loading /> : <VStack p="$8">
           <Box rounded='lg' mb={3} overflow='hidden'>
             <Image
               source={{ uri: `${api.defaults.baseURL}/exercise/demo/${exercise?.demo}`, }}
@@ -133,7 +138,7 @@ export function Exercise() {
 
             <Button title="Marcar como realizado" />
           </Box>
-        </VStack>
+        </VStack>}
       </ScrollView>
     </VStack>
   )
